@@ -52,9 +52,11 @@ const Page = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+ useEffect(() => {
+   if (typeof window !== "undefined") {
+     localStorage.setItem("theme", theme);
+   }
+ }, [theme]);
 
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
