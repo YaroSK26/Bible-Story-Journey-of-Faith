@@ -73,7 +73,7 @@ export default function Home() {
       {!showMessage ? (
         <>
           <h1 className="text-2xl">Bible Story: Journey of Faith</h1>
-          <p>this project is a summary of important events in the bible</p>
+          <p className="text-center px-2">this project is a summary of important events in the bible</p>
           <br />
           <br />
           <br />
@@ -93,7 +93,7 @@ export default function Home() {
         </>
       ) : (
         <div className="absolute inset-0 flex flex-col justify-center items-center ">
-          <div className="flex">
+          <div className="flex sm:flex-row flex-col">
             <h1
               className="text-4xl font-bold"
               ref={(el) => {

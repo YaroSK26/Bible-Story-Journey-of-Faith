@@ -1,15 +1,30 @@
-"use client"
-import React, { useEffect, useState } from 'react';
-import data from './data.json'; 
+"use client";
+import React, { useEffect, useState } from "react";
+import data from "./data.json";
 
 const Page = () => {
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "dark";
+    }
+    return "dark";
+  });
+
   const [currentIndexes, setCurrentIndexes] = useState({
     section: 0,
     content: 0,
   });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSectionIndex, setOpenSectionIndex] = useState(null);
-   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  const [isThemeLoaded, setIsThemeLoaded] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+    setIsThemeLoaded(true);
+  }, []);
 
   const handlePrev = () => {
     setCurrentIndexes((oldIndexes) => {
@@ -17,7 +32,10 @@ const Page = () => {
       let newContentIndex = oldIndexes.content - 1;
 
       if (newContentIndex < 0) {
-        newSectionIndex = newSectionIndex - 1 < 0 ? data.sections.length - 1 : newSectionIndex - 1;
+        newSectionIndex =
+          newSectionIndex - 1 < 0
+            ? data.sections.length - 1
+            : newSectionIndex - 1;
         newContentIndex = data.sections[newSectionIndex].content.length - 1;
       }
 
@@ -31,13 +49,15 @@ const Page = () => {
       let newContentIndex = oldIndexes.content + 1;
 
       if (newContentIndex >= data.sections[oldIndexes.section].content.length) {
-        newSectionIndex = newSectionIndex + 1 >= data.sections.length ? 0 : newSectionIndex + 1;
+        newSectionIndex =
+          newSectionIndex + 1 >= data.sections.length ? 0 : newSectionIndex + 1;
         newContentIndex = 0;
       }
 
       return { section: newSectionIndex, content: newContentIndex };
     });
   };
+
   const handleSectionClick = (sectionIndex) => {
     setOpenSectionIndex(
       sectionIndex === openSectionIndex ? null : sectionIndex
@@ -52,15 +72,22 @@ const Page = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
- useEffect(() => {
-   if (typeof window !== "undefined") {
-     localStorage.setItem("theme", theme);
-   }
- }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", newTheme);
+      return newTheme;
+    });
   };
+
+  if (!isThemeLoaded) {
+    return (
+        <h1 className="text-white flex  justify-center items-center h-[100vh]">
+            Loading..
+        </h1>
+    );
+  }
 
   return (
     <div
@@ -99,7 +126,12 @@ const Page = () => {
       </button>
 
       <label className="switch absolute top-4 right-4">
-        <input type="checkbox" onClick={toggleTheme} className="checkbox" />
+        <input
+          type="checkbox"
+          onClick={toggleTheme}
+          className="checkbox"
+          checked={theme === "light"}
+        />
         <div className="slider"></div>
       </label>
 
@@ -176,16 +208,17 @@ const Page = () => {
             ].heading
           }
         </h2>
-        <div className='flex justify-center'>
-        <img className='w-[300px] h-48 my-2'
-          src={
+        <div className="flex justify-center">
+          <img
+            className="w-[300px] h-48 my-2"
+            src={
               data.sections[currentIndexes.section].content[
-                  currentIndexes.content
-                ].img
+                currentIndexes.content
+              ].img
             }
             alt="image compoatible to choosen section"
-            />
-            </div>
+          />
+        </div>
         <p className="mb-2">
           {
             data.sections[currentIndexes.section].content[
