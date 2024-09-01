@@ -69,22 +69,25 @@ export default function Home() {
   };
 
   return (
-    <div
-      className="flex justify-center items-center h-[100vh] flex-col gap-2 relative"
-    >
+    <div className="flex justify-center items-center h-[100vh] flex-col gap-2 relative">
       {!showMessage ? (
         <>
-          <h1>Bible Story: Journey of Faith</h1>
+          <h1 className="text-2xl">Bible Story: Journey of Faith</h1>
+          <p>this project is a summary of important events in the bible</p>
+          <br />
+          <br />
+          <br />
+          <br />
           <br />
           <br />
           {isLoaded && (
             <button
               ref={buttonRef}
-              className="absolute outline-none"
+              className="absolute outline-none btn "
               style={{ opacity: 0 }}
               onClick={handleStartClick}
             >
-              Start &gt;
+              Start
             </button>
           )}
         </>
@@ -97,7 +100,7 @@ export default function Home() {
                 messageRefs.current[0] = el;
               }}
             >
-              I am the truth,
+              I am the truth,&nbsp;
             </h1>
             <h1
               className="text-4xl font-bold"
@@ -105,7 +108,7 @@ export default function Home() {
                 messageRefs.current[1] = el;
               }}
             >
-              the way,
+              the way,&nbsp;
             </h1>
             <h1
               className="text-4xl font-bold"
@@ -113,9 +116,9 @@ export default function Home() {
                 messageRefs.current[2] = el;
               }}
             >
-              and the life
+              and the life.
             </h1>
-          </div>
+          </div><br />
           <p
             ref={(el) => {
               messageRefs.current[3] = el;
