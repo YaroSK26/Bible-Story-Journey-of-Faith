@@ -71,26 +71,23 @@ export default function Home() {
   return (
     <div className="flex justify-center items-center h-[100vh] flex-col gap-2 relative">
       {!showMessage ? (
-        <>
-          <h1 className="text-2xl">Bible Story: Journey of Faith</h1>
+        <div className="flex justify-center items-center flex-col gap-5">
+          <div>
+          <h1 className="text-2xl text-center">Bible Story: Journey of Faith</h1>
           <p className="text-center px-2">this project is a summary of important events in the bible</p>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
+          </div>
+          
           {isLoaded && (
             <button
               ref={buttonRef}
-              className="absolute outline-none btn "
+              className="outline-none btn "
               style={{ opacity: 0 }}
               onClick={handleStartClick}
             >
               Start
             </button>
           )}
-        </>
+        </div>
       ) : (
         <div className="absolute inset-0 flex flex-col justify-center items-center ">
           <div className="flex sm:flex-row flex-col">
